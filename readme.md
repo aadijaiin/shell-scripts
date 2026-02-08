@@ -146,7 +146,7 @@ This project demonstrates:
 
 ---
 
-## 📌 Future Improvements (Optional)
+## 📌 Future Improvements 
 
 * `--help` flag
 * Retention policy
