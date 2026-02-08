@@ -2,34 +2,38 @@
 
 echo "Automated backup script!"
 
-SOURCE="$1"
+SOURCE="${1:-$PWD}"
 
 if [ -n "$SOURCE" ] && [ -d "$SOURCE" ] ; then
-    MODE="d"
-elif [ -n "$SOURCE" ] && [ -f "$SOURCE" ]; then
-    MODE="f"
+    echo
 else 
     echo "Invalid source!"
     exit 1
 fi
 
-DESTINATION="$2"
+BACKUP_ROOT="$HOME/Desktop/backups"
+mkdir -p "$BACKUP_ROOT"
 
-if [ -n "$DESTINATION" ] && [ -d "$DESTINATION" ] ; then
-    SOURCE_NAME=$(basename "$SOURCE")
-    BACKUP_DIR="$DESTINATION/backups_$SOURCE_NAME"
-    mkdir -p "$BACKUP_DIR"
-else 
-    echo "Invalid destination! please enter a valid path to store the backups."
-    exit 1
-fi
+
+BACKUP_DIR="$BACKUP_ROOT/$(basename "$SOURCE")_backups"
+
+mkdir -p "$BACKUP_DIR"
+
+# echo $SOURCE $BACKUP_DIR
+
 
 tar -czf \
-  "$BACKUP_DIR/${SOURCE_NAME}_$(date +%F_%H-%M-%S).tar.gz" \
-  -C "$(dirname "$SOURCE")" \
-  "$SOURCE_NAME"
+    "$BACKUP_DIR/$(basename "$SOURCE")_$(date +%F_%H-%M-%S).tar.gz" \
+    -C "$(dirname "$SOURCE")" \
+    "$(basename "$SOURCE")"
 
-echo "Backup created successfully."
+
+if [ $? -eq 0 ]; then
+    echo "Backup created successfully."
+else 
+    echo "There was a problem in generating backup."
+    exit 1
+fi
 
 RETENTION_DAYS=7
 find "$BACKUP_DIR" -type f -name "*.tar.gz" -mtime +$RETENTION_DAYS -delete
