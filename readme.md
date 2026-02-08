@@ -156,13 +156,3 @@ This project demonstrates:
 
 ---
 
-## 👤 Author
-
-**Aadi Jain**
-Built as part of an intermediate Linux & Bash automation learning journey.
-
----
-
-## 📜 License
-
-MIT — use it, break it, improve it.
