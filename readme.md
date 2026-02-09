@@ -146,8 +146,7 @@ This project demonstrates:
 
 ---
 
-## 📌 Future Improvements 
-
+## 📌 Future Improvements
 * `--help` flag
 * Retention policy
 * Lockfile support (`flock`)
